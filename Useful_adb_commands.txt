@@ -1,0 +1,26 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.6
+Creation-Date: 2026-02-06T16:35:05+00:00
+
+====== Useful adb commands ======
+Created Friday 06 February 2026
+
+Stop the rate limiting for logcat:
+
+adb shell auditctl -r 0
+
+
+Android versions
+| Version number | Letter | APK version |
+|:---------------|:-------|:------------|
+| 10             | Q      | 29          |
+| 11             | R      | 30          |
+| 12             | S      | 31          |
+| 13             | T      | 33          |
+| 14             | U      | 34          |
+| 15             | a      | 35          |
+| 16             | b      | 36          |
+|                |        |             |
+			
+
+

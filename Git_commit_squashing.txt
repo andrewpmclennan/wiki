@@ -1,0 +1,22 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.6
+Creation-Date: 2026-02-06T08:22:08+00:00
+
+====== Git commit squashing ======
+Created Friday 06 February 2026
+
+Make sure you do a git pull first!
+
+The basic command is:
+
+git rebase -i HEAD~[NUMBER_OF_COMMITS]
+
+Change everything other than the first message to "f"
+
+Then:
+git push --force 
+
+
+Updating when you have a conflict
+
+git reset --hard origin/name_of_remote_branch

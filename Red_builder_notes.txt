@@ -1,0 +1,36 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.6
+Creation-Date: 2025-12-16T09:08:59+00:00
+
+====== Red builder notes ======
+Created Tuesday 16 December 2025
+
+Creating a repo based on a pre-existing workspace
+NB Both of these need to be full paths
+
+'''
+r workspace <NAME OF THE NEW WORKSPACE> --clone <NAME OF THE OLD WORKSPACE>
+
+'''
+NB this is for cloning workspaces, not the images
+
+Creating a new workspace
+
+r new <PLATFORM> <YOUR_NEW_NAME_FOR_CONTAINER> <WORKSPACE_PATH>
+
+Nightly images
+
+These are located in 
+[[/build/jenkins/nightly]]
+
+When you login to a new container, your environment may not be properly setup.
+
+Run
+
+'''r-setup_environment.sh''' 
+
+Test with croot
+
+then
+
+'''r-relunch.sh'''

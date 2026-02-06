@@ -1,0 +1,17 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.6
+Creation-Date: 2026-01-06T10:18:07+00:00
+
+====== QA notes ======
+Created Tuesday 06 January 2026
+
+Create a subtask and add this table:
+
+| Item                     |   | Dev Info [QA Guide | https://egconfluence.cld.dtveng.net/pages/viewpage.action?pageId=92610810] |
+|--------------------------|---|--------------------|----------------------------------------------------------------------------|
+| Build Link(s)            |   |                    |                                                                            |
+| Pull Request             |   |                    |                                                                            |
+| Hardware Requirements    |   |                    |                                                                            |
+| Smoke Test?              |   |                    |                                                                            |
+| Additional Testing Notes |   |                    |                                                                            |
+

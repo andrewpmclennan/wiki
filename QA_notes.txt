@@ -9,9 +9,9 @@ Create a subtask and add this table:
 
 | Item                     |   | Dev Info [QA Guide | https://egconfluence.cld.dtveng.net/pages/viewpage.action?pageId=92610810] |
 |--------------------------|---|--------------------|----------------------------------------------------------------------------|
-| Build Link(s)            |   |                    |                                                                            |
+| Smoke Test?              |   |                    |                                                                            |
 | Pull Request             |   |                    |                                                                            |
 | Hardware Requirements    |   |                    |                                                                            |
-| Smoke Test?              |   |                    |                                                                            |
+| Build Link(s)            |   |                    |                                                                            |
 | Additional Testing Notes |   |                    |                                                                            |
 

@@ -1,0 +1,638 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.6
+Creation-Date: 2026-03-04T09:32:08+00:00
+
+====== Gradle Build Commands Reference ======
+
+=== Quick Reference Guide for Building and Cleaning Android Modules and Apps ===
+
+---
+
+=== Table of Contents ===
+1. [[ngctv repo stuff#project-structure|Project Structure]]
+2. [[ngctv repo stuff#Complete Project Build|Complete Project Build]]
+3. [[ngctv repo stuff#App-Specific Commands|App-Specific Commands]]
+   - [[ngctv repo stuff#NGCTV App|NGCTV App]]
+   - [[ngctv repo stuff#OSKService App|OSKService App]]
+   - [[ngctv repo stuff#DTVLauncher App|DTVLauncher App]]
+4. [[ngctv repo stuff#Module-Specific Commands|Module-Specific Commands]]
+5. [[ngctv repo stuff#Clean Commands|Clean Commands]]
+6. [[ngctv repo stuff#Testing Commands|Testing Commands]]
+7. [[ngctv repo stuff#Bundle Commands|Bundle Commands]]
+8. [[ngctv repo stuff#Diagnostic Commands|Diagnostic Commands]]
+9. [[ngctv repo stuff#Common Workflows|Common Workflows]]
+10. [[ngctv repo stuff#Build Variants Reference|Build Variants Reference]]
+
+---
+
+==== Project Structure ====
+
+=== Apps ===
+- **ngctv** - Main Android TV application
+- **oskservice** - On-Screen Keyboard service
+- **dtvlauncher** - DirectTV launcher
+
+=== Module Groups ===
+- **common-modules**: account, cloud_dvr, configuration, core, discovery, locationservice, metrics, networkapis, shef, testutil, xCMS
+- **directv-now-modules**: common, commonngc, commonplayer, commontv, framework-tv, messaging, ngckeyboard, ngcsettings, quickplayplayer
+- **ov-modules**: placeholder
+- **testing-modules**: e2e
+- **benchmark-modules**: macrobenchmark, microbenchmark
+
+---
+
+== Complete Project Build ==
+
+```bash
+# Build everything (all apps and modules)
+./gradlew build
+
+# Clean and build everything
+./gradlew clean build
+
+# Build without tests (faster)
+./gradlew build -x test
+
+# Build with parallel execution
+./gradlew build --parallel
+
+# Build with build cache
+./gradlew build --build-cache
+```
+
+---
+
+==== App-Specific Commands ====
+
+=== NGCTV App ===
+
+== Build All Variants ==
+```bash
+./gradlew :apps:ngctv:build
+./gradlew :apps:ngctv:assemble
+```
+
+== Build Debug Variants ==
+```bash
+# Atom debug
+./gradlew :apps:ngctv:assembleAtomDebug
+
+# Mono debug
+./gradlew :apps:ngctv:assembleMonoDebug
+
+# Mono debug with certificate
+./gradlew :apps:ngctv:assembleMonoDebugWithCert
+
+# All debug variants
+./gradlew :apps:ngctv:assembleDebug
+```
+
+== Build Release Variants ==
+```bash
+# Atom release
+./gradlew :apps:ngctv:assembleAtomRelease
+
+# Mono release
+./gradlew :apps:ngctv:assembleMonoRelease
+
+# Mono release with certificate
+./gradlew :apps:ngctv:assembleMonoReleaseWithCert
+
+# All release variants
+./gradlew :apps:ngctv:assembleRelease
+```
+
+== Build Benchmark Variants ==
+```bash
+# Atom benchmark
+./gradlew :apps:ngctv:assembleAtomBenchmark
+
+# Mono benchmark
+./gradlew :apps:ngctv:assembleMonoBenchmark
+
+# Benchmark release (requires enableBaselineProfile=true)
+./gradlew :apps:ngctv:assembleBenchmarkRelease
+```
+
+== Build Non-Minified Release (for profiling)
+```bash
+./gradlew :apps:ngctv:assembleAtomNonMinifiedRelease
+./gradlew :apps:ngctv:assembleMonoNonMinifiedRelease
+```
+
+== Build All Variants of a Flavor
+```bash
+# All Atom variants (debug, release, benchmark, etc.)
+./gradlew :apps:ngctv:assembleAtom
+
+# All Mono variants
+./gradlew :apps:ngctv:assembleMono
+```
+
+---
+
+=== OSKService App
+
+```bash
+# Build all variants
+./gradlew :apps:oskservice:build
+./gradlew :apps:oskservice:assemble
+
+# Build debug
+./gradlew :apps:oskservice:assembleDebug
+
+# Build release
+./gradlew :apps:oskservice:assembleRelease
+```
+
+---
+
+=== DTVLauncher App
+
+```bash
+# Build all variants
+./gradlew :apps:dtvlauncher:build
+./gradlew :apps:dtvlauncher:assemble
+
+# Build debug
+./gradlew :apps:dtvlauncher:assembleDebug
+
+# Build release
+./gradlew :apps:dtvlauncher:assembleRelease
+```
+
+---
+
+==== Module-Specific Commands
+
+=== Build Individual Modules
+
+```bash
+# Common modules
+./gradlew :modules:common-modules:core:build
+./gradlew :modules:common-modules:account:build
+./gradlew :modules:common-modules:cloud_dvr:build
+./gradlew :modules:common-modules:configuration:build
+./gradlew :modules:common-modules:discovery:build
+./gradlew :modules:common-modules:locationservice:build
+./gradlew :modules:common-modules:metrics:build
+./gradlew :modules:common-modules:networkapis:build
+./gradlew :modules:common-modules:shef:build
+./gradlew :modules:common-modules:testutil:build
+./gradlew :modules:common-modules:xCMS:build
+
+# DirectTV modules
+./gradlew :modules:directv-now-modules:common:build
+./gradlew :modules:directv-now-modules:commonngc:build
+./gradlew :modules:directv-now-modules:commonplayer:build
+./gradlew :modules:directv-now-modules:commontv:build
+./gradlew :modules:directv-now-modules:framework-tv:build
+./gradlew :modules:directv-now-modules:messaging:build
+./gradlew :modules:directv-now-modules:ngckeyboard:build
+./gradlew :modules:directv-now-modules:ngcsettings:build
+./gradlew :modules:directv-now-modules:quickplayplayer:build
+
+# Testing modules
+./gradlew :modules:testing-modules:e2e:build
+
+# Benchmark modules
+./gradlew :modules:benchmark-modules:macrobenchmark:build
+./gradlew :modules:benchmark-modules:microbenchmark:build
+```
+
+---
+
+==== Clean Commands
+
+=== Global Clean
+```bash
+# Clean entire project (all apps and modules)
+./gradlew clean
+```
+
+=== App-Specific Clean
+```bash
+# Clean NGCTV
+./gradlew :apps:ngctv:clean
+
+# Clean OSKService
+./gradlew :apps:oskservice:clean
+
+# Clean DTVLauncher
+./gradlew :apps:dtvlauncher:clean
+
+# Clean all apps
+./gradlew :apps:ngctv:clean :apps:oskservice:clean :apps:dtvlauncher:clean
+```
+
+=== Module-Specific Clean
+```bash
+# Clean specific module
+./gradlew :modules:common-modules:core:clean
+./gradlew :modules:directv-now-modules:commontv:clean
+
+# Clean multiple modules
+./gradlew :modules:common-modules:account:clean \
+		  :modules:common-modules:cloud_dvr:clean \
+		  :modules:common-modules:core:clean
+```
+
+=== Special Clean Tasks
+```bash
+# Clean downloaded Charles certificates (NGCTV specific)
+./gradlew :apps:ngctv:cleanCertificates
+```
+
+---
+
+==== Testing Commands
+
+=== Unit Tests
+
+```bash
+# Run all unit tests for NGCTV
+./gradlew :apps:ngctv:test
+
+# Run tests for specific variant
+./gradlew :apps:ngctv:testAtomDebugUnitTest
+./gradlew :apps:ngctv:testMonoDebugUnitTest
+./gradlew :apps:ngctv:testAtomReleaseUnitTest
+./gradlew :apps:ngctv:testMonoReleaseUnitTest
+
+# Run tests for other apps
+./gradlew :apps:oskservice:test
+./gradlew :apps:dtvlauncher:test
+
+# Run tests for specific module
+./gradlew :modules:common-modules:core:test
+```
+
+=== Instrumentation Tests
+**Note:** Requires a connected Android device or emulator
+
+```bash
+# Run all instrumentation tests for NGCTV
+./gradlew :apps:ngctv:connectedAndroidTest
+
+# Run instrumentation tests for specific variant
+./gradlew :apps:ngctv:connectedAtomDebugAndroidTest
+./gradlew :apps:ngctv:connectedMonoDebugAndroidTest
+
+# Run instrumentation tests for other apps
+./gradlew :apps:oskservice:connectedAndroidTest
+./gradlew :apps:dtvlauncher:connectedAndroidTest
+```
+
+=== Test Reports
+```bash
+# Generate test report (after running tests)
+# Reports available at: apps/ngctv/build/reports/tests/test/index.html
+./gradlew :apps:ngctv:test
+
+# Run tests with coverage
+./gradlew :apps:ngctv:testAtomDebugUnitTest --continue
+```
+
+---
+
+==== Bundle Commands
+
+Generate Android App Bundles (AAB) for Play Store distribution:
+
+```bash
+# Generate all bundles for NGCTV
+./gradlew :apps:ngctv:bundle
+
+# Generate specific variant bundles
+./gradlew :apps:ngctv:bundleAtomRelease
+./gradlew :apps:ngctv:bundleMonoRelease
+./gradlew :apps:ngctv:bundleAtomDebug
+./gradlew :apps:ngctv:bundleMonoDebug
+
+# Generate bundles by flavor
+./gradlew :apps:ngctv:bundleAtom
+./gradlew :apps:ngctv:bundleMono
+
+# Generate bundles for other apps
+./gradlew :apps:oskservice:bundle
+./gradlew :apps:dtvlauncher:bundle
+```
+
+---
+
+==== Diagnostic Commands
+
+=== Project Information
+```bash
+# List all projects and modules
+./gradlew projects
+
+# List all tasks for a project
+./gradlew :apps:ngctv:tasks
+
+# List all tasks with details
+./gradlew :apps:ngctv:tasks --all
+
+# Get help for specific task
+./gradlew help --task assembleAtomDebug
+```
+
+=== Dependency Management
+```bash
+# View all dependencies for NGCTV
+./gradlew :apps:ngctv:dependencies
+
+# View dependencies for specific configuration
+./gradlew :apps:ngctv:dependencies --configuration releaseRuntimeClasspath
+./gradlew :apps:ngctv:dependencies --configuration debugCompileClasspath
+
+# View insight for specific dependency
+./gradlew :apps:ngctv:dependencyInsight --dependency retrofit
+./gradlew :apps:ngctv:dependencyInsight --dependency dagger
+
+# Refresh dependencies (force update)
+./gradlew --refresh-dependencies
+
+# View buildscript dependencies
+./gradlew buildEnvironment
+```
+
+=== Build Analysis
+```bash
+# Build with performance profiling
+./gradlew :apps:ngctv:assembleAtomDebug --profile
+
+# Build with build scan
+./gradlew :apps:ngctv:build --scan
+
+# Show dependency verification
+./gradlew :apps:ngctv:dependencies --verify-metadata
+```
+
+---
+
+==== Common Workflows
+
+=== Development Workflow
+```bash
+# Quick incremental debug build (no clean)
+./gradlew :apps:ngctv:assembleAtomDebug
+
+# Quick incremental build with parallel execution
+./gradlew :apps:ngctv:assembleMonoDebug --parallel
+
+# Build and install on connected device
+./gradlew :apps:ngctv:installAtomDebug
+./gradlew :apps:ngctv:installMonoDebug
+```
+
+=== Clean Build Workflows
+```bash
+# Clean rebuild of NGCTV debug
+./gradlew :apps:ngctv:clean :apps:ngctv:assembleAtomDebug
+
+# Clean rebuild of NGCTV release
+./gradlew :apps:ngctv:clean :apps:ngctv:assembleAtomRelease
+
+# Clean rebuild of everything
+./gradlew clean build
+
+# Clean rebuild without tests (faster)
+./gradlew clean build -x test
+```
+
+=== Release Build Workflows
+```bash
+# Build release with tests
+./gradlew :apps:ngctv:clean :apps:ngctv:assembleAtomRelease :apps:ngctv:testAtomReleaseUnitTest
+
+# Build release bundle for Play Store
+./gradlew :apps:ngctv:clean :apps:ngctv:bundleAtomRelease
+
+# Build all release variants
+./gradlew :apps:ngctv:assembleRelease
+```
+
+=== Multi-App Build
+```bash
+# Build all apps
+./gradlew :apps:ngctv:build :apps:oskservice:build :apps:dtvlauncher:build
+
+# Build all apps in parallel
+./gradlew :apps:ngctv:build :apps:oskservice:build :apps:dtvlauncher:build --parallel
+
+# Clean and build all apps
+./gradlew :apps:ngctv:clean :apps:oskservice:clean :apps:dtvlauncher:clean \
+		  :apps:ngctv:build :apps:oskservice:build :apps:dtvlauncher:build
+```
+
+=== Testing Workflows
+```bash
+# Run all tests for NGCTV
+./gradlew :apps:ngctv:test :apps:ngctv:connectedAndroidTest
+
+# Run unit tests only (faster)
+./gradlew :apps:ngctv:testAtomDebugUnitTest
+
+# Run tests for all apps
+./gradlew :apps:ngctv:test :apps:oskservice:test :apps:dtvlauncher:test
+```
+
+---
+
+==== Build Variants Reference
+
+=== NGCTV Build Variants
+
+== Product Flavors
+- **atom** - Original APK for Osprey platform (optimized for Osprey hardware)
+- **mono** - Monolithic APK for AndroidTV/Chromecast/Emulator (APIs 29, 30)
+  - Includes ABIs: `armeabi-v7a`, `arm64-v8a`, `x86`, `x86_64`
+
+== Build Types
+- **debug** - Debug build with symbols, not obfuscated
+- **release** - Production build with ProGuard/R8 minification and resource shrinking
+- **benchmark** - Performance benchmarking build (not debuggable)
+- **debugWithCert** - Debug build with SSL certificate support (mono only)
+- **releaseWithCert** - Release build with SSL certificate support (mono only)
+- **benchmarkRelease** - Benchmark release variant (requires `enableBaselineProfile=true`)
+- **nonMinifiedRelease** - Release without minification for profiling (requires `enableBaselineProfile=true`)
+
+== Standard Build Variants
+- `atomDebug`
+- `atomRelease`
+- `atomBenchmark`
+- `monoDebug`
+- `monoRelease`
+- `monoBenchmark`
+- `monoDebugWithCert`
+- `monoReleaseWithCert`
+
+== Conditional Variants (require specific gradle.properties settings)
+- `atomBenchmarkRelease` (requires `enableBaselineProfile=true`)
+- `atomNonMinifiedRelease` (requires `enableBaselineProfile=true`)
+- `monoBenchmarkRelease` (requires `enableBaselineProfile=true`)
+- `monoNonMinifiedRelease` (requires `enableBaselineProfile=true`)
+
+=== OSKService Build Variants
+- `debug`
+- `release`
+
+=== DTVLauncher Build Variants
+- `debug`
+- `release`
+
+---
+
+==== Performance Tips
+
+=== Speed Up Builds
+```bash
+# Use parallel execution (recommended)
+./gradlew build --parallel
+
+# Skip tests for faster builds
+./gradlew build -x test
+
+# Use Gradle daemon (usually enabled by default)
+./gradlew build --daemon
+
+# Use build cache
+./gradlew build --build-cache
+
+# Combine for maximum speed (clean build without tests)
+./gradlew clean build -x test --parallel --build-cache
+```
+
+=== Configuration in gradle.properties
+```properties
+# Enable parallel builds
+org.gradle.parallel=true
+
+# Enable caching
+org.gradle.caching=true
+
+# Increase JVM heap size
+org.gradle.jvmargs=-Xmx24g
+
+# Enable configuration cache (Gradle 8+)
+org.gradle.configuration-cache=true
+```
+
+---
+
+==== Build Configuration
+
+=== Enable/Disable Modules in gradle.properties
+```properties
+# Control which apps to build
+buildNGCTV=true
+buildOSKSERVICE=true
+buildDTVLauncher=true
+
+# Control baseline profile generation
+enableBaselineProfile=false
+
+# Control composite builds
+composeAppLauncher=false
+composeFeatureFlag=false
+composeCommonJetpackTv=false
+composeUserProfiles=false
+composeMyLibrary=false
+composeLogin=false
+composeMySubscriptions=false
+composeNgcCoreAccount=false
+composeMvSqueezeBackMenu=false
+```
+
+---
+
+==== Output Locations
+
+=== APK Output
+```
+apps/ngctv/build/outputs/apk/<flavor>/<buildType>/
+  - atomDebug.apk
+  - monoRelease.apk
+  etc.
+
+apps/oskservice/build/outputs/apk/<buildType>/
+apps/dtvlauncher/build/outputs/apk/<buildType>/
+```
+
+=== Bundle Output (AAB)
+```
+apps/ngctv/build/outputs/bundle/<flavor><BuildType>/
+  - atomRelease.aab
+  - monoRelease.aab
+  etc.
+```
+
+=== Test Reports
+```
+apps/ngctv/build/reports/tests/
+  - testAtomDebugUnitTest/index.html
+  - testMonoDebugUnitTest/index.html
+```
+
+=== ProGuard Mapping Files
+```
+proguardTools/
+  - mapping-mobile-releaseSigned.txt
+  - mapping-tv-releaseSigned.txt
+```
+
+---
+
+==== Troubleshooting
+
+=== Common Issues
+
+== Build Fails with "Out of Memory"
+```bash
+# Increase heap size in gradle.properties
+org.gradle.jvmargs=-Xmx24g -XX:MaxMetaspaceSize=2048m
+```
+
+== Dependencies Not Resolved
+```bash
+# Refresh dependencies
+./gradlew --refresh-dependencies build
+
+# Clear Gradle cache
+rm -rf ~/.gradle/caches/
+./gradlew build
+```
+
+== Incremental Build Issues
+```bash
+# Do a clean build
+./gradlew clean build
+```
+
+== Multiple Gradle Daemons
+```bash
+# Check daemon status
+./gradlew --status
+
+# Stop all daemons
+./gradlew --stop
+
+# Then rebuild
+./gradlew build
+```
+
+---
+
+==== Additional Resources
+
+- **Memory Bank Documentation**: See `memory-bank/` directory for detailed architecture and implementation guides
+- **Main README**: See `README.md` for setup instructions and project overview
+- **Dependency Management**: See `local.versions.toml` for library versions
+- **ProGuard Rules**: See `apps/ngctv/proguard-rules.pro` for obfuscation configuration
+
+---
+
+**Last Updated**: March 2025  
+**Gradle Version**: 8.7  
+**Android Gradle Plugin**: 8.5.2

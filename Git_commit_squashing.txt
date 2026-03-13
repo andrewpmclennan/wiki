@@ -20,3 +20,10 @@ git push --force
 Updating when you have a conflict
 
 git reset --hard origin/name_of_remote_branch
+
+Command to look at the global settings and make sure that they are correct
+
+git config -l 
+
+This opens an editor
+git config --global -e
